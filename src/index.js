@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 exports.__esModule = true;
 var id = 5;
 var company = "Traversy Media";
@@ -55,6 +70,10 @@ var user1 = {
 var add = function (x, y) { return x + y; };
 var subtract = function (x, y) { return x - y; };
 // Classes - (also available in JS, can also implement an interface with a class) - used to create objects
+// Class properties can be public, private, or protected
+// Public is the same as leaving it off
+// Private means it can only be used within the class
+//Protected means you can only use it within this class or any class that is extended from this class
 var Person = /** @class */ (function () {
     // constructor runs when object is instantiated
     function Person(id, name) {
@@ -62,9 +81,27 @@ var Person = /** @class */ (function () {
         this.id = id;
         this.name = name;
     }
+    Person.prototype.register = function () {
+        return "".concat(this.name, " is now registered");
+    };
     return Person;
 }());
 // this will run the Person Constructor function
 var me = new Person(1, "Nicole");
 var Jordan = new Person(2, "Jordan");
-console.log(me, Jordan);
+// console.log(me, Jordan)
+// This will run the method register from in the class :
+// console.log(me.register())
+// can "extend" a class into another class, essentially spreads class properties into new class and you can add additional properties (new class inherits properties of primary class)
+// use super keyword to initialize properties from OG class
+var Employee = /** @class */ (function (_super) {
+    __extends(Employee, _super);
+    function Employee(id, name, position) {
+        var _this = _super.call(this, id, name) || this;
+        _this.position = position;
+        return _this;
+    }
+    return Employee;
+}(Person));
+var newEmployee = new Employee(3, "Joe", "Manager");
+console.log(newEmployee.register());
